@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="c.css">
+<style>
+
+</style>
+</head>
+<body id = "area">
+  <div id = "ui-box" class="page" aria-hidden="true">
+    <div class="left" id="view3d"></div>
+    <div id = "right-box" class="right">
+      <h1 id = "head" >ข้อมูลบ้านตัวอย่าง</h1>
+      <p id = "d">
+      </p>
+      <button id="myBtn">กดฉันสิ</button>
+    </div>
+  </div>
+  <div class="intro-overlay" aria-hidden="true">
+    <div class="intro-panel top"></div>
+    <div class="intro-panel bottom"></div>
+  </div>
+  <div id="tooltip"></div>
+</body>
+<script> const ui = document.getElementById("ui-box");
+ ui.style.display = "";</script>
+<script type="importmap">
+    {
+        "imports":{
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "MTLLoader": "https://unpkg.com/three@0.160.0/examples/jsm/loaders/MTLLoader.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+            "OBJLoader":"https://unpkg.com/three@0.160.0/examples/jsm/loaders/OBJLoader.js",
+            "gsap": "https://cdn.skypack.dev/gsap@3.12.5",
+            "OrbitControls" :"https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js"
+        }
+    }
+</script>
+<script type="module" src="c.js"></script>
+</html>

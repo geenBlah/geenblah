@@ -1,0 +1,103 @@
+body { margin: 0; overflow: hidden; background: black; }
+    canvas { display: block; }
+    #tooltip {
+      position: absolute;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 14px;
+      pointer-events: none;
+      display: none;
+    }
+      :root{
+    --intro-duration: 1.2s;      /* ความเร็วแอนิเมชัน */
+    --intro-delay: 0s;           /* หน่วงเวลาเริ่ม */
+    --intro-ease: cubic-bezier(.22,.61,.36,1); /* การเร่ง/ผ่อน */
+    --intro-bg: #000;            /* สีแผ่นเปิดฉาก */
+  }
+
+  /* ====== Intro Overlay ====== */
+  .intro-overlay{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;      /* กันการกดตอนแอนิเมชัน */
+    z-index: 9999;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .intro-panel{
+    background: var(--intro-bg);
+    transform: translateY(0);
+    will-change: transform;
+    animation-duration: var(--intro-duration);
+    animation-delay: var(--intro-delay);
+    animation-timing-function: var(--intro-ease);
+    animation-fill-mode: forwards;
+  }
+
+  /* แผงบนเลื่อน "ขึ้น" ออกจากจอ */
+  .intro-panel.top{
+    animation-name: slideUpOut;
+  }
+  /* แผงล่างเลื่อน "ลง" ออกจากจอ */
+  .intro-panel.bottom{
+    animation-name: slideDownOut;
+  }
+
+  @keyframes slideUpOut{
+    from{ transform: translateY(0%); }
+    to  { transform: translateY(-100%); }
+  }
+  @keyframes slideDownOut{
+    from{ transform: translateY(0%); }
+    to  { transform: translateY(100%); }
+  }
+
+  /* เมื่อผู้ใช้ตั้งค่าลดการเคลื่อนไหว ให้ข้ามแอนิเมชัน */
+  @media (prefers-reduced-motion: reduce){
+    .intro-panel{ animation: none !important; transform: translateY(-200%); }
+    .intro-overlay{ display: none; }
+  }
+  #view3d canvas {
+  position: fixed; /* ครอบเต็มหน้าจอ */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; /* อยู่ด้านล่าง */
+}
+    html, body { height: 100%; margin: 0; }
+    .page {
+      display: flex;
+      height: 100%;
+      background: #0b0e13;
+      color: #e5e7eb;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    }
+    .left {
+      flex: 1 1 60%;
+      position: relative;          /* ให้ canvas วางเต็มพื้นที่ได้ */
+      min-width: 320px;
+      border-right: 1px solid #111827;
+    }
+    .right {
+      flex: 1 1 40%;
+      padding: 24px;
+      overflow: auto;
+      background: #0f172a;
+    }
+    h1 { margin: 0 0 12px; font-size: 20px; }
+    p { line-height: 1.6; color: #cbd5e1; }
+    .panel {
+      background: #111827; border: 1px solid #1f2937; border-radius: 14px;
+      padding: 16px; margin-top: 16px;
+    }
+
+    /* จอแคบ: ซ้อนเป็นแนวตั้ง */
+    @media (max-width: 900px) {
+      .page { flex-direction: column; }
+      .left { height: 50vh; border-right: 0; border-bottom: 1px solid #111827; }
+      .right { height: 50vh; }
+    }
