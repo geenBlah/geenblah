@@ -18,7 +18,7 @@ const numName = Array("Floor_Material","chair_Material.014","computer.001_comput
   "keyboard_Material.004","mattress_Material.010","table_Material.008","rubbish_Material.019","human");
 const NameArray = Array("Floor","chair","computer","monitor","keyboard","mattress","table","rubbish","ยุรน้นท์ และเล็ก");
 console.log(numName);
-
+let copiedPart = null
 const container = document.getElementById('view3d');
 
 
@@ -127,15 +127,16 @@ mtlLoader.load(MTL_URL, (materials) => {
 //
 let model = null;
 mtlLoader.load(
-  'Untitled.mtl',
+  'Inside.mtl',
   (materials) => {
     materials.preload();
     const objLoader = new OBJLoader();
     objLoader.setMaterials(materials);
     objLoader.load(
-      'Untitled.obj',
+      'Inside.obj',
       (object) => {
         model = object;
+        copiedPart = model
         model.traverse((o) => {
           if (o.isMesh) {
             o.castShadow = true;
@@ -214,6 +215,7 @@ function addFallbackCube() {
   cube.position.y = 0.5;
   scene.add(cube);
 }
+
 function clickObj(event) {
       if (!right_box.contains(event.target)) {
        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -235,6 +237,13 @@ function clickObj(event) {
       ui.style.display = "flex"
       head.textContent = NameArray[num]
       d.textContent = textArray[num]
+if (copiedPart.parent) {
+  copiedPart.parent.remove(copiedPart);
+}
+const part = all_OBJ.getObjectByName("ชื่อPart");
+  copiedPart = obj.clone(); // ✅ คัดลอก
+    copiedPart.position.set(0, 0, 2);
+    scene2.add(copiedPart);
   }
 }
 else {
@@ -296,8 +305,14 @@ function animate() {
 
 animate();
     // --- Handle Resize ---
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+window.addEventListener('resize', () => {
+  // --- camera ตัวแรก ---
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  // --- camera2 และ renderer2 ---
+  camera2.aspect = container.clientWidth / container.clientHeight;
+  camera2.updateProjectionMatrix();
+  renderer2.setSize(container.clientWidth, container.clientHeight);
+});

@@ -1,0 +1,27 @@
+document.addEventListener("click", (event) => {
+    if (!right_box.contains(event.target)) {
+       mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  // Raycast หา object
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(scene.children);
+  if (intersects.length > 0) {
+      let num = null;
+      const obj = intersects[0].object;
+      console.log(obj.name)
+      for (let i = 0; i<numName.length;i++){
+        if(numName[i] == obj.name){
+        console.log(i)
+        num = i;
+      }
+    }
+      ui.style.display = "flex"
+      head.textContent = NameArray[num]
+      d.textContent = textArray[num]
+  }
+}
+else {
+  ui.style.display = "none"
+}
+});

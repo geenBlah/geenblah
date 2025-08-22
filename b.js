@@ -21,6 +21,7 @@ scene.background = new THREE.Color('#0b0e13');
 // --- Camera ---
 const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
 camera.position.z = 10;
+camera.position.y += 1;
 
 
 // --- Light ---
@@ -39,7 +40,7 @@ const material = new THREE.MeshStandardMaterial({
   roughness: .3
 });
 const cube = new THREE.Mesh(geometry,material);
-cube.position.y += 3
+cube.position.y += 4
       cube.material = new THREE.MeshStandardMaterial({
         map: texture
       });
@@ -60,9 +61,10 @@ mtlLoader.load(MTL_URL, (materials) => {
   objLoader.load(OBJ_URL, (object) => {
     all_OBJ = object
     all_OBJ.position.x = -1
+    all_OBJ.position.y = -1
     all_OBJ.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; }});
-    part = all_OBJ.getObjectByName('Cube.001_Cube.001') || null;
-    door = all_OBJ.getObjectByName('Cube_Material') || null;
+    part = all_OBJ.getObjectByName('part_part') || null;
+    door = all_OBJ.getObjectByName('Untitled_Untitled') || null;
     console.log(part)
     if (part) {
       console.log("เจอเวยไอน้อง")
